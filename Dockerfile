@@ -12,7 +12,7 @@ RUN unzip /tmp/backend.zip -d /tmp/extracted \
     && mkdir -p /app \
     && cp -a /tmp/extracted/backend/. /app/
 
-WORKDIR /app
+WORKDCOPY init_db.py /app/init_db.py
 
 RUN pip install --no-cache-dir -r requirements.txt python-multipart
 
