@@ -1,4 +1,4 @@
-name: Build CarrelloGiusto v7.7.1
+name: Build CarrelloGiusto v7.7.2 Release
 
 "on":
   workflow_dispatch:
@@ -14,7 +14,7 @@ jobs:
       - name: Extract app
         run: |
           mkdir app
-          unzip carrello_giusto_v7_7_1_test.zip -d app
+          unzip carrello_giusto_v7_7_2_test.zip -d app
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -40,12 +40,12 @@ jobs:
           sed -i 's/isSelected: _selectedKey == plan.key,/selected: _selectedKey == plan.key,/' lib/screens/results_screen.dart
           sed -i 's/return const OptimizationResult(/return OptimizationResult(/' lib/services/demo_result_service.dart
 
-      - name: Build APK
+      - name: Build Release APK
         working-directory: app
-        run: flutter build apk --debug
+        run: flutter build apk --release
 
-      - name: Upload APK
+      - name: Upload Release APK
         uses: actions/upload-artifact@v4
         with:
-          name: CarrelloGiusto-v7.7.1
-          path: app/build/app/outputs/flutter-apk/app-debug.apk
+          name: CarrelloGiusto-v7.7.2-release
+          path: app/build/app/outputs/flutter-apk/app-release.apk
