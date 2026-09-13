@@ -14,7 +14,7 @@ jobs:
       - name: Extract app
         run: |
           mkdir app
-          unzip carrello_giusto_v7_7_3_online.zip -d app
+          unzip carrello_giusto_v7_7_3_online_fixed.zip -d app
 
       - name: Setup Java
         uses: actions/setup-java@v4
