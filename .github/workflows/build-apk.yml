@@ -1,22 +1,18 @@
-name: Build CarrelloGiusto APK
+name: Build CarrelloGiusto v7.7.1
 
-on:
+"on":
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 jobs:
-  build-apk:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Extract CarrelloGiusto
+      - name: Extract app
         run: |
-          rm -rf app
           mkdir app
           unzip carrello_giusto_v7_7_1_test.zip -d app
 
@@ -24,88 +20,32 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: "17"
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: stable
-          cache: true
 
-      - name: Prepare Flutter project
+      - name: Prepare app
         working-directory: app
         run: |
           chmod +x tool/*.sh
           ./tool/bootstrap_flutter.sh
 
-      - name: Apply APK build fixes
+      - name: Apply compatibility fixes
         working-directory: app
         run: |
           sed -i 's/isRecommended: plan.recommended,/recommended: plan.recommended,/' lib/screens/results_screen.dart
           sed -i 's/isSelected: _selectedKey == plan.key,/selected: _selectedKey == plan.key,/' lib/screens/results_screen.dart
           sed -i 's/return const OptimizationResult(/return OptimizationResult(/' lib/services/demo_result_service.dart
 
-      - name: Build Android APK
+      - name: Build APK
         working-directory: app
         run: flutter build apk --debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: carrellogiusto-v7-7-1-test-apk
-          path: app/build/app/outputs/flutter-apk/app-debug.apkname: Build CarrelloGiusto APK
-
-on:
-  workflow_dispatch:
-  push:
-    branches:
-      - main
-
-jobs:
-  build-apk:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Extract CarrelloGiusto
-        run: |
-          rm -rf app
-          mkdir app
-          unzip carrello_giusto_v7_6.zip -d app
-
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
-
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-          cache: true
-
-      - name: Prepare Flutter project
-        working-directory: app
-        run: |
-          chmod +x tool/*.sh
-          ./tool/bootstrap_flutter.sh
-
-      - name: Apply APK build fixes
-        working-directory: app
-        run: |
-          sed -i 's/isRecommended: plan.recommended,/recommended: plan.recommended,/' lib/screens/results_screen.dart
-          sed -i 's/isSelected: _selectedKey == plan.key,/selected: _selectedKey == plan.key,/' lib/screens/results_screen.dart
-          sed -i 's/return const OptimizationResult(/return OptimizationResult(/' lib/services/demo_result_service.dart
-
-      - name: Build Android APK
-        working-directory: app
-        run: flutter build apk --debug
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: carrellogiusto-debug-apk
+          name: CarrelloGiusto-v7.7.1
           path: app/build/app/outputs/flutter-apk/app-debug.apk
