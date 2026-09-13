@@ -14,7 +14,7 @@ RUN unzip /tmp/backend.zip -d /tmp/extracted \
 
 WORKDIR /app
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt python-multipart
 
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONPATH=/app
