@@ -1,4 +1,4 @@
-name: Build CarrelloGiusto v7.7.2 Release
+name: Build CarrelloGiusto v7.7.3 Online Release
 
 "on":
   workflow_dispatch:
@@ -14,7 +14,7 @@ jobs:
       - name: Extract app
         run: |
           mkdir app
-          unzip carrello_giusto_v7_7_2_test.zip -d app
+          unzip carrello_giusto_v7_7_3_online.zip -d app
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -47,5 +47,5 @@ jobs:
       - name: Upload Release APK
         uses: actions/upload-artifact@v4
         with:
-          name: CarrelloGiusto-v7.7.2-release
+          name: name: CarrelloGiusto-v7.7.3-online-release
           path: app/build/app/outputs/flutter-apk/app-release.apk
