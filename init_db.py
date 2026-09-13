@@ -13,23 +13,13 @@ with psycopg.connect(database_url) as conn:
     with conn.cursor() as cur:
         cur.execute(sql)
 
+        # Adegua la tabella products alle colonne richieste dal backend
         cur.execute("""
             ALTER TABLE products
             ADD COLUMN IF NOT EXISTS product_key TEXT,
             ADD COLUMN IF NOT EXISTS name TEXT,
-            ADD COLUMN IF NOT EXISTS unit TEXT;
-        """)
-
-        cur.execute("""
-            UPDATE products
-            SET product_key = id::text
-            WHERE product_key IS NULL;
-        """)
-
-        cur.execute("""
-            UPDATE products
-            SET unit = 'pezzo'
-            WHERE unit IS NULL;
+            ADD COLUMN IF NOT EXISTS unit TEXT DEFAULT 'pezzo',
+            ADD COLUMN IF NOT EXISTS default_quantity DOUBLE PRECISION DEFAULT 1.0;
         """)
 
     conn.commit()
