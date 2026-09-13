@@ -20,4 +20,4 @@ RUN pip install --no-cache-dir -r requirements.txt python-multipart
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONPATH=/app
 
-CMD ["sh", "-c", "python /init_db.py && uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+CMD ["sh", "-c", "python /app/init_db.py && uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
