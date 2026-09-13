@@ -40,6 +40,7 @@ jobs:
           sed -i 's/isSelected: _selectedKey == plan.key,/selected: _selectedKey == plan.key,/' lib/screens/results_screen.dart
           sed -i 's/return const OptimizationResult(/return OptimizationResult(/' lib/services/demo_result_service.dart
           sed -i 's/)),const SizedBox(height:18)/))),const SizedBox(height:18)/' lib/screens/home_screen.dart
+          sed -i 's/p.productTotal.toStringAsFixed(2)/(p.productTotal ?? 0).toStringAsFixed(2)/g; s/p.travelCost.toStringAsFixed(2)/(p.travelCost ?? 0).toStringAsFixed(2)/g; s/p.timeCost.toStringAsFixed(2)/(p.timeCost ?? 0).toStringAsFixed(2)/g; s/p.distanceKm.toStringAsFixed(1)/(p.distanceKm ?? 0).toStringAsFixed(1)/g; s/p.durationMinutes.toStringAsFixed(0)/(p.durationMinutes ?? 0).toStringAsFixed(0)/g' lib/screens/results_screen.dart
       - name: Build Release APK
         working-directory: app
         run: flutter build apk --release
