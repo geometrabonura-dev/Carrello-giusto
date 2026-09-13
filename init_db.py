@@ -19,6 +19,11 @@ with psycopg.connect(database_url) as conn:
         """)
 
         cur.execute("""
+            ALTER TABLE products
+            ADD COLUMN IF NOT EXISTS name TEXT;
+        """)
+
+        cur.execute("""
             UPDATE products
             SET product_key = id::text
             WHERE product_key IS NULL;
