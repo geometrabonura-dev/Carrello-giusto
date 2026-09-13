@@ -39,7 +39,7 @@ jobs:
           sed -i 's/isRecommended: plan.recommended,/recommended: plan.recommended,/' lib/screens/results_screen.dart
           sed -i 's/isSelected: _selectedKey == plan.key,/selected: _selectedKey == plan.key,/' lib/screens/results_screen.dart
           sed -i 's/return const OptimizationResult(/return OptimizationResult(/' lib/services/demo_result_service.dart
-
+          sed -i 's/)),const SizedBox(height:18)/))),const SizedBox(height:18)/' lib/screens/home_screen.dart
       - name: Build Release APK
         working-directory: app
         run: flutter build apk --release
